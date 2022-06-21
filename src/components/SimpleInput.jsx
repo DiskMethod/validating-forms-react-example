@@ -1,72 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+
+import useInput from "../hooks/use-input";
 
 const inputIsValid = (input) => {
   return input ? "form-control" : "form-control invalid";
 };
 
 const SimpleInput = (props) => {
-  // name input
-  const [enteredName, setEnteredName] = useState("");
-  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
+  const {
+    value: enteredName,
+    inputIsInvalid: nameInputIsInvalid,
+    valueChangeHandler: nameInputChangeHandler,
+    inputBlurHandler: nameInputBlurHandler,
+  } = useInput("", (value) => value.trim() !== "");
 
-  // name input validation
-  const enteredNameIsValid = enteredName.trim() !== "";
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
-
-  // email input
-  const [enteredEmail, setEnteredEmail] = useState("");
-  const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
-
-  // email input validation
-  const enteredEmailIsValid =
-    enteredEmail.trim() !== "" && enteredEmail.trim().includes("@");
-  const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
+  const {
+    value: enteredEmail,
+    inputIsInvalid: emailInputIsInvalid,
+    valueChangeHandler: emailInputChangeHandler,
+    inputBlurHandler: emailInputBlurHandler,
+  } = useInput("", (value) => value.includes("@") && value.trim() !== "");
 
   // overall form validation
   let formIsValid = false;
 
-  if (enteredNameIsValid && enteredEmailIsValid) {
+  if (!nameInputIsInvalid && !emailInputIsInvalid) {
     formIsValid = true;
   }
 
-  // name input handlers
-  const nameInputChangeHandler = (e) => {
-    setEnteredName(e.target.value);
-  };
-
-  const nameInputBlurHandler = (e) => {
-    setEnteredNameTouched(true);
-  };
-
-  // email input handlers
-  const emailInputChangeHandler = (e) => {
-    setEnteredEmail(e.target.value);
-  };
-
-  const emailInputBlurHandler = (e) => {
-    setEnteredEmailTouched(true);
-  };
-
   const formSubmissionHandler = (e) => {
     e.preventDefault();
-
-    // name input
-    setEnteredNameTouched(true);
-
-    // email input
-    setEnteredEmailTouched(true);
-
-    if (!enteredNameIsValid || !enteredEmailIsValid) {
-      return;
-    }
-
-    // name input
-    setEnteredNameTouched(false);
-    setEnteredName("");
-
-    // email input
-    setEnteredEmailTouched(false);
-    setEnteredEmail("");
   };
 
   return (
