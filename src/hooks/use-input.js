@@ -5,7 +5,7 @@ const inputReducer = (state, action) => {
     case "SET":
       return { ...state, enteredValue: action.enteredValue };
     case "BLUR":
-      return { ...state, isTouched: action.isTouched };
+      return { ...state, isTouched: true };
     case "RESET":
       return { enteredValue: action.enteredValue, isTouched: action.isTouched };
     default:
@@ -30,10 +30,7 @@ const useInput = (initialValue, validationFn) => {
   };
 
   const inputBlurHandler = (e) => {
-    dispatch({
-      type: "BLUR",
-      isTouched: true,
-    });
+    dispatch({ type: "BLUR" });
   };
 
   const reset = () => {
