@@ -12,6 +12,7 @@ const SimpleInput = (props) => {
     inputIsInvalid: nameInputIsInvalid,
     valueChangeHandler: nameInputChangeHandler,
     inputBlurHandler: nameInputBlurHandler,
+    reset: nameReset,
   } = useInput("", (value) => value.trim() !== "");
 
   const {
@@ -19,6 +20,7 @@ const SimpleInput = (props) => {
     inputIsInvalid: emailInputIsInvalid,
     valueChangeHandler: emailInputChangeHandler,
     inputBlurHandler: emailInputBlurHandler,
+    reset: emailReset,
   } = useInput("", (value) => value.includes("@") && value.trim() !== "");
 
   // overall form validation
@@ -30,6 +32,8 @@ const SimpleInput = (props) => {
 
   const formSubmissionHandler = (e) => {
     e.preventDefault();
+    nameReset();
+    emailReset();
   };
 
   return (
